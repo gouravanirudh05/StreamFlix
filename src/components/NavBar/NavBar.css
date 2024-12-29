@@ -1,0 +1,315 @@
+.navbar
+{
+    width:100%;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    font-size: 14px;
+    color: #e5e5e5;
+    background-image: linear-gradient(180deg,rgba(0,0,0,0.7)10%,transparent);
+    z-index: 1;
+}
+.navbar-left
+{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+}
+.navbar-left img{
+    width: 90px;
+}
+.navbar-left-ul{
+    display: flex;
+    gap: 20px;
+    list-style-type: none;
+}
+.navbar-left-ul li
+{
+    cursor: pointer;
+}
+.navbar-right
+{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.navbar-right .icons
+{
+    width: 20px;
+    cursor: pointer;
+}
+.navbar-right .profile
+{
+    border-radius: 4px;
+    width: 35px;
+}
+.navbar-profile
+{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+.navbar .dropdown
+{
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max-content;
+  background-color: #191919;
+  padding:18px 22px ;
+  border-radius: 2px;
+    text-decoration: underline;
+    z-index: 1;
+    display: none;
+}
+.navbar .dropdown p{
+    font-size: 13px;
+    cursor: pointer;
+}
+.navbar-profile:hover .dropdown,
+.navbar .dropdown:hover {
+    display: block; /* Keep the dropdown visible while hovering over it */
+}
+
+.nav-dark
+{
+    background: #141414;
+}
+@media(max-width:800px)
+{
+    .navbar 
+    {
+        padding: 20px 4%;
+    }
+    .navbar-left-ul
+    {
+        display: none;
+    }
+    .navbar img 
+    {
+        height: 25px;
+    }
+
+} 
+@media (max-width:500px)
+{
+    .navbar img
+    {
+        height: 20px;
+    }
+    .navbar-right
+    {
+        gap: 10px;
+    }
+}
+/* Style for links to remove blue color and underline */
+.navbar-left-ul li a {
+    color: inherit; /* Inherits the color from parent (e.g., #e5e5e5 from .navbar) */
+    text-decoration: none; /* Removes the underline */
+    transition: color 0.3s ease; /* Adds a smooth color transition effect */
+}
+
+/* Hover effect for links */
+.navbar-left-ul li a:hover {
+    color: #ffffff; /* Changes color on hover (optional) */
+}
+/* Search container */
+.navbar-right .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Search input field */
+  .navbar-right .search-input {
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+  }
+  
+  /* Search results container */
+  .navbar-right .search-results {
+    position: absolute;
+    top: 60px; /* Adjust based on your navbar height */
+    right: 6%;
+    background-color: #141414;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+  
+  /* Individual search result item */
+.navbar-right  .search-result-item {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  
+  .navbar-right .search-result-item:hover {
+    background-color: #333;
+  }
+  .search-results .close-button {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  .search-results .close-button:hover {
+    color: red;
+  }
+  
+  .search-results {
+    position: absolute;
+    top: 100%; /* Below the search input */
+    left: 0;
+    right: 0;
+    max-height: 400px; /* Set a max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: #fff; /* Background for results */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional styling */
+    border-radius: 4px; /* Optional rounded corners */
+    z-index: 1000; /* Ensure it's above other elements */
+    padding: 10px; /* Spacing around results */
+  }
+  
+  .search-results::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .search-results::-webkit-scrollbar-thumb {
+    background-color: #888; /* Scrollbar thumb color */
+    border-radius: 4px; /* Rounded corners for thumb */
+  }
+  
+  .search-results::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Hover effect for scrollbar thumb */
+  }
+  
+  .search-category {
+    margin-bottom: 20px; /* Spacing between categories */
+  }
+  
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Spacing between result items */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .search-result-item:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+  }
+  
+  .search-result-thumbnail {
+    width: 50px; /* Thumbnail size */
+    height: 75px;
+    object-fit: cover; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between thumbnail and info */
+  }
+  
+  .search-result-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-result-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .search-result-year {
+    font-size: 14px;
+    color: #666;
+  }
+  .notification-dropdown {
+    position: absolute;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 250px;
+    z-index: 10;
+  }
+  
+  .no-notifications {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+  }
+  
+  .notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-list li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+  }
+  
+  .notification-list li:last-child {
+    border-bottom: none;
+  }
+  .profile-dropdown {
+    position: absolute;
+    top: 50px; /* Adjust based on your layout */
+    right: 20px;
+    background-color: #000;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 200px;
+    z-index: 10;
+  }
+  
+  .profile-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .profile-dropdown li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown li:hover {
+    background-color: #333;
+  }
+  
+  .profile-dropdown .dropdown-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .profile-dropdown .sign-out {
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    color: red;
+  }
+    

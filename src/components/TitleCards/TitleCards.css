@@ -1,0 +1,94 @@
+.title-cards {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.title-cards h2 {
+    margin-bottom: 0px;
+}
+
+.card-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+}
+
+.card-list::-webkit-scrollbar {
+    display: none;
+}
+
+.card-list img {
+    width: 240px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out; /* Smooth image animation */
+}
+
+.card-list .card {
+    position: relative;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out; /* Smooth card animation */
+}
+
+.card-list .card p {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #fff;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(10px); /* Slightly moved down */
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; /* Fade-in effect */
+}
+
+.card:hover {
+    transform: scale(1.15) translateY(-5px) rotate(2deg); /* Scale up, move slightly upward, and tilt */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+    z-index: 10; /* Bring the card in front of others */
+}
+
+.card:hover img {
+    transform: scale(1.1); /* Slight zoom-in effect for the image */
+}
+
+.card:hover p {
+    opacity: 1; /* Fade-in text */
+    transform: translateY(0); /* Slide text into its original position */
+}
+
+@media (max-width: 800px) {
+    .title-cards {
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+
+    .title-cards h2 {
+        font-size: 20px;
+    }
+
+    .card-list img {
+        width: 200px;
+    }
+
+    .card-list p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 500px) {
+    .title-cards {
+        margin-top: 20px;
+        margin-bottom: 0;
+    }
+
+    .title-cards h2 {
+        font-size: 15px;
+    }
+
+    .card-list img {
+        width: 165px;
+    }
+
+    .card-list p {
+        font-size: 10px;
+    }
+}
