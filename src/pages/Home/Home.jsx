@@ -3,18 +3,11 @@ import './Home.css';
 import NavBar from '../../components/NavBar/NavBar';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
-
 const Home = () => {
-  const navigate = useNavigate();
-  const [banners, setBanners] = useState([]); // State for storing multiple banners
-  const [trailerUrl, setTrailerUrl] = useState('');
-  const [showInfo, setShowInfo] = useState(false);
-  const [selectedBanner, setSelectedBanner] = useState(null); // Track the selected banner for trailer/info
-  const [currentIndex, setCurrentIndex] = useState(0); // Track the current banner index
-
+  const [banners, setBanners] = useState([]);
+  const [trailerUrls, setTrailerUrls] = useState([]); 
+  const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
-    // Fetching top-rated movies to display as banners
     fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', {
       method: 'GET',
       headers: {
@@ -23,94 +16,63 @@ const Home = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => {
-        setBanners(data.results); // Set banners to movie results
-        setSelectedBanner(data.results[0]); // Default to the first movie
+      .then(async (data) => {
+        setBanners(data.results);
+        const trailers = await Promise.all(
+          data.results.map((movie) =>
+            fetch(
+              `https://api.themoviedb.org/3/movie/${movie.id}/videos?language=en-US`,
+              {
+                method: 'GET',
+                headers: {
+                  accept: 'application/json',
+                  Authorization: import.meta.env.VITE_API_KEY,
+                },
+              }
+            )
+              .then((res) => res.json())
+              .then((videoData) => {
+                const trailer = videoData.results.find((vid) => vid.type === 'Trailer');
+                return trailer
+                  ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1&controls=0&loop=1&playlist=${trailer.key}`
+                  : null; 
+              })
+          )
+        );
+        setTrailerUrls(trailers);
       });
   }, []);
-
   useEffect(() => {
-    // Automatically transition banners every 3 seconds
     const interval = setInterval(() => {
       if (banners.length > 0) {
-        const nextIndex = (currentIndex + 1) % banners.length;
-        setCurrentIndex(nextIndex);
-        setSelectedBanner(banners[nextIndex]);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
       }
-    }, 3000); // 3 seconds delay
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, [banners, currentIndex]);
-
-  const handlePlayClick = () => {
-    // Fetching the trailer URL for the selected banner
-    if (selectedBanner) {
-      fetch(
-        `https://api.themoviedb.org/3/movie/${selectedBanner.id}/videos?language=en-US`,
-        {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: import.meta.env.VITE_API_KEY,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const trailer = data.results.find((video) => video.type === 'Trailer');
-          if (trailer) navigate(`/player/${selectedBanner.id}`);
-        });
+    }, 30000); 
+    return () => clearInterval(interval); 
+  }, [banners]);
+  const handleAudioPlayback = () => {
+    const iframe = document.querySelector('.banner-trailer');
+    if (iframe) {
+      const src = iframe.src;
+      iframe.src = src; 
     }
   };
-
   return (
-    <div className='home'>
+    <div className='home' onClick={handleAudioPlayback}>
       <NavBar />
       <div className='banner-container'>
-        {selectedBanner && (
+        {banners.length > 0 && trailerUrls.length > 0 && (
           <div className='banner'>
-            <img
-              src={`https://image.tmdb.org/t/p/original${selectedBanner.backdrop_path}`}
-              alt=""
-              className='banner-img'
-            />
+            <iframe
+              src={trailerUrls[currentIndex]} 
+              title='Trailer Preview'
+              className='banner-trailer'
+              allow='autoplay; encrypted-media'
+              allowFullScreen
+            ></iframe>
             <div className='banner-caption'>
-              <img
-                src={`https://image.tmdb.org/t/p/original${selectedBanner.poster_path}`}
-                alt=""
-                className='caption-img'
-              />
-              <p>{selectedBanner.overview}</p>
-              <div className='banner-btns'>
-                <button className='btn' onClick={handlePlayClick}>
-                  Play
-                </button>
-                <button
-                  className='btn dark-btn'
-                  onClick={() => setShowInfo(!showInfo)}
-                >
-                  More Info
-                </button>
-              </div>
-              {trailerUrl && (
-                <div className='trailer'>
-                  <iframe
-                    src={trailerUrl}
-                    title='YouTube video player'
-                    frameBorder='0'
-                    allow='autoplay; encrypted-media'
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              )}
-              {showInfo && (
-                <div className='more-info'>
-                  <h3>{selectedBanner.title}</h3>
-                  <p>Release Date: {selectedBanner.release_date}</p>
-                  <p>Rating: {selectedBanner.vote_average}</p>
-                  <p>{selectedBanner.overview}</p>
-                </div>
-              )}
+              <h2>{banners[currentIndex].title}</h2>
+              <p>{banners[currentIndex].overview}</p>
             </div>
           </div>
         )}
@@ -125,5 +87,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

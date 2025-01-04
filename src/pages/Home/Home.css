@@ -1,6 +1,8 @@
 .banner
 {
     position:relative;
+    height: 500px;
+    overflow: hidden;
 }
 .banner-img {
     width: 100%;
@@ -11,9 +13,12 @@
 .banner-caption
 {
     position: absolute;
-    width: 100%;
-    padding-left:6% ;
-    bottom: 0;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 
 }
 .caption-img{
@@ -121,4 +126,26 @@
         padding-left: 2%;
     }
 }
-
+.banner-trailer {
+    width: 100%;
+    height: 100%;
+  }
+  .preview-window {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 225px;
+    border: 2px solid white;
+    border-radius: 8px;
+    background-color: black;
+    overflow: hidden;
+    z-index: 10;
+  }
+  
+  .preview-window iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
