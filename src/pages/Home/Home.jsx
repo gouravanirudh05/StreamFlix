@@ -3,6 +3,7 @@ import './Home.css';
 import NavBar from '../../components/NavBar/NavBar';
 import TitleCards from '../../components/TitleCards/TitleCards';
 import Footer from '../../components/Footer/Footer';
+import { Helmet } from "react-helmet-async";
 const Home = () => {
   const [banners, setBanners] = useState([]);
   const [trailerUrls, setTrailerUrls] = useState([]); 
@@ -58,6 +59,10 @@ const Home = () => {
     }
   };
   return (
+    <Helmet>
+      <title>StreamFlix - Home</title>
+      <meta name="description" content="Discover the latest movies, TV shows, and more on Netflix." />
+    
     <div className='home' onClick={handleAudioPlayback}>
       <NavBar />
       <div className='banner-container'>
@@ -85,6 +90,7 @@ const Home = () => {
       </div>
       <Footer />
     </div>
+    </Helmet>
   );
 };
 export default Home;
