@@ -58,9 +58,6 @@ const Home = () => {
     }
   };
   return (
-      <title>StreamFlix - Home</title>
-      <meta name="description" content="Discover the latest movies, TV shows, and more on Netflix." />
-    
     <div className='home' onClick={handleAudioPlayback}>
       <NavBar />
       <div className='banner-container'>
